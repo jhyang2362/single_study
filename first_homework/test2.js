@@ -7,7 +7,7 @@ var execFile = require('child_process').execFile;
 var app = express();
 var num1, num2, result;
 
-app.use(multipart({uploadDir: __dirname}));
+app.use(multipart({uploadDir: __dirname+'/upload'}));
 app.get('/',function(request,response){
   fs.readFile('HTMLPage.html',function(error,data){
     response.send(data.toString());
@@ -26,19 +26,21 @@ app.post('/',function(request,response){
 
     var outputPath = __dirname + '/upload/homework';
 
+
     fs.rename(path,outputPath, function(error){
-      //response.redirect('/');
+
     });
-    //var cmd = 'chmod 777 ~/dev/개별연구/upload/homework';
-    var auth = exec('chmod -R a+rwx '+outputPath, function(error, stdout, stderr){
+    //  var cmd = '~/dev/studyfirst_homework/upload/homework';
+    var auth = exec('chmod 777 ./upload/homework', function(error, stdout, stderr){
       if(error) {
         console.error('stderr', stderr);
         throw error;
       }
     });
+
     num1 = Math.floor(Math.random()*100)+1;
     num2 = Math.floor(Math.random()*100)+1;
-    var child = execFile('./upload/homework',[num1, num2],  function(error, stdout, stderr){
+    var child = execFile('./upload/homework',[num1, num2], function(error, stdout, stderr){
       if(error) {
         console.error('stderr', stderr);
         throw error;
