@@ -28,33 +28,37 @@ app.post('/',function(request,response){
 
 
     fs.rename(path,outputPath, function(error){
+      var auth = exec('chmod 777 ./upload/homework', function(error, stdout, stderr){
+        if(error) {
+          console.error('stderr', stderr);
+          throw error;
+        }
+        else{
+          num1 = Math.floor(Math.random()*100)+1;
+          num2 = Math.floor(Math.random()*100)+1;
+          var child = execFile('./upload/homework',[num1, num2], function(error, stdout, stderr){
+            if(error) {
+              console.error('stderr', stderr);
+              throw error;
+            }
+            result = stdout;
+            //console.log(num1+'+'+ num2+'= '+ stdout);
+            if(stdout==num1+num2){
+              console.log("Correct");
 
-    });
+            }
+            response.redirect('/result');
+          });
+        }
+      });
     //  var cmd = '~/dev/studyfirst_homework/upload/homework';
-    var auth = exec('chmod 777 ./upload/homework', function(error, stdout, stderr){
-      if(error) {
-        console.error('stderr', stderr);
-        throw error;
-      }
-    });
 
-    num1 = Math.floor(Math.random()*100)+1;
-    num2 = Math.floor(Math.random()*100)+1;
-    var child = execFile('./upload/homework',[num1, num2], function(error, stdout, stderr){
-      if(error) {
-        console.error('stderr', stderr);
-        throw error;
-      }
-      result = stdout;
-      //console.log(num1+'+'+ num2+'= '+ stdout);
-      if(stdout==num1+num2){
-        console.log("Correct");
-      }
+
     });
-    throw response.redirect('/result');
   }else{
     response.sendStatus(404);
   }
+
 
   //response.redirect('/');
 });
