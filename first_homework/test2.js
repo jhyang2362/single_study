@@ -36,7 +36,7 @@ app.post('/',function(request,response){
         else{
           num1 = Math.floor(Math.random()*100)+1;
           num2 = Math.floor(Math.random()*100)+1;
-          var child = execFile('./upload/homework',[num1, num2], function(error, stdout, stderr){
+          var child = execFile('./homework',[num1, num2], function(error, stdout, stderr){
             if(error) {
               console.error('stderr', stderr);
               throw error;
@@ -72,7 +72,7 @@ app.get('/result',function(request, response){
   }
 });
 
-app.listen(52273,function(){
-  console.log('Server running at http://127.0.0.1:52273');
+app.listen(3000,function(){
+  console.log('Server running at http://127.0.0.1:3000');
 
 });
